@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v2.1.6.min.js"></script>
+</head>
+<body>
+<h3 style="margin-left:70px">U.S. Smartphone marketshare</h3>
+
+<div id="chartContainer"></div>
+</body>
+<script type="text/javascript">
+
+    var data = [
+        {'Company': 'RIM', 'Market share': 39},
+        {'Company': 'Other', 'Market share': 21.2},
+        {'Company': 'Apple', 'Market share': 19.5},
+        {'Company': 'Palm', 'Market share': 9.8},
+        {'Company': 'Motorola', 'Market share': 7.4},
+        {'Company': 'Nokia', 'Market share': 3.1}
+    ];
+
+    var svg = dimple.newSvg("#chartContainer", 700, 400);
+
+    var myBarChart = new dimple.chart(svg, data);
+    myBarChart.addMeasureAxis("x", "Market share");
+    var y = myBarChart.addCategoryAxis("y", "Company");
+    y.addOrderRule("Market share");
+    var s = myBarChart.addSeries(null, dimple.plot.bar);
+    myBarChart.defaultColors = [
+        new dimple.color("#A8A8A8"), // Set a red fill with a blue stroke
+        new dimple.color("#00FF00"), // Set a green fill with a darker green stroke
+        new dimple.color("rgb(0, 0, 255)") // Set a blue fill with a darker blue stroke
+    ];
+    s.afterDraw = function (shape, data) {
+        // Get the shape as a d3 selection
+        var s = d3.select(shape),
+                rect = {
+                    x: parseFloat(s.attr("x")),
+                    y: parseFloat(s.attr("y")),
+                    width: parseFloat(s.attr("width")),
+                    height: parseFloat(s.attr("height"))
+                };
+
+            // Add a text label for the value
+            svg.append("text")
+                // Position in the centre of the shape (vertical position is
+                // manually set due to cross-browser problems with baseline)
+                    .attr("x", rect.x + rect.width - 20)
+                    .attr("y", rect.y + rect.height / 2 + 3.5)
+                // Centre align
+                    .style("text-anchor", "middle")
+                    .style("font-size", "10px")
+                    .style("font-family", "sans-serif")
+                // Make it a little transparent to tone down the black
+                    .style("opacity", 0.6)
+                // Format the number
+                    .text(d3.format(",.1f")(data.xValue) + "%");
+
+    };
+    
+    myBarChart.draw();
+
+    var svg = dimple.newSvg("#chartContainer", 590, 400);
+    var myPieChart = new dimple.chart(svg, data);
+    myPieChart.addMeasureAxis("p", "Market share");
+    myPieChart.addSeries("Company", dimple.plot.pie);
+    myPieChart.addLegend(500, 20, 90, 300, "left");
+    myPieChart.addL
+    myPieChart.draw();
+
+</script>
+</html>
