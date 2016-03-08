@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+        div.datamaps-legend {
+            float:left;
+            position:relative;
+            left:50%;
+            top: 0;
+        }
+        dl {
+            float:left;
+            position:relative;
+            left:-50%;
+        }
+    </style>
+</head>
+
+<body>
+<div style="width: 1000px; text-align:center">
+    <h2>Percentage of U.S. adults who identify as lesbian, gay, bisexual, or transgender (LGBT), 2012</h2>
+</div>
+<div id="container" style="position: center; width: 1000px; height: 600px;"></div>
+</body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+<script src="datamaps.usa.min.js"></script>
+<script>
+    var map = new Datamap({
+        element: document.getElementById('container'),
+        scope: 'usa',
+        fills: {
+            'Straight as an Arrow': '#FFFF33',
+            'Straight': '#FFCC33',
+            'Average': '#FF9933',
+            'Pretty Gay': '#FF6633',
+            'Super Gay': '#FF3333',
+            defaultFill: '#E6FFCC'
+        },
+        data: {
+            "AZ": {
+                "fillKey": "Pretty Gay",
+                "lgbtPopulation": 3.9
+            },
+            "CO": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.2
+            },
+            "DE": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.4
+            },
+            "FL": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.5
+            },
+            "GA": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.5
+            },
+            "HI": {
+                "fillKey": "Super Gay",
+                "lgbtPopulation": 5.1
+            },
+            "ID": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.7
+            },
+            "IL": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.8
+            },
+            "IN": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.7
+            },
+            "IA": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.8
+            },
+            "KS": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.7
+            },
+            "KY": {
+                "fillKey": "Pretty Gay",
+                "lgbtPopulation": 3.9
+            },
+            "LA": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.2
+            },
+            "MD": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.3
+            },
+            "ME": {
+                "fillKey": "Super Gay",
+                "lgbtPopulation": 4.8
+            },
+            "MA": {
+                "fillKey": "Pretty Gay",
+                "lgbtPopulation": 4.4
+            },
+            "MN": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.9
+            },
+            "MI": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.8
+            },
+            "MS": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.6
+            },
+            "MO": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.6
+            },
+            "MT": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.6
+            },
+            "NC": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.3
+            },
+            "NE": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.7
+            },
+            "NV": {
+                "fillKey": "Pretty Gay",
+                "lgbtPopulation": 4.2
+            },
+            "NH": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.7
+            },
+            "NJ": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.7
+            },
+            "NY": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.8
+            },
+            "ND": {
+                "fillKey": "Straight as an Arrow",
+                "lgbtPopulation": 1.7
+            },
+            "NM": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.9
+            },
+            "OH": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.6
+            },
+            "OK": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.4
+            },
+            "OR": {
+                "fillKey": "Super Gay",
+                "lgbtPopulation": 4.9
+            },
+            "PA": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.7
+            },
+            "RI": {
+                "fillKey": "Super Gay",
+                "lgbtPopulation": 4.5
+            },
+            "SC": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.9
+            },
+            "SD": {
+                "fillKey": "Pretty Gay",
+                "lgbtPopulation": 4.4
+            },
+            "TN": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.7
+            },
+            "TX": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.3
+            },
+            "UT": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.7
+            },
+            "WI": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.8
+            },
+            "VA": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.9
+            },
+            "VT": {
+                "fillKey": "Super Gay",
+                "lgbtPopulation": 4.9
+            },
+            "WA": {
+                "fillKey": "Pretty Gay",
+                "lgbtPopulation": 4.0
+            },
+            "WV": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.1
+            },
+            "WY": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.9
+            },
+            "CA": {
+                "fillKey": "Pretty Gay",
+                "lgbtPopulation": 4.0
+            },
+            "CT": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.4
+            },
+            "AK": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.4
+            },
+            "AR": {
+                "fillKey": "Average",
+                "lgbtPopulation": 3.5
+            },
+            "AL": {
+                "fillKey": "Straight",
+                "lgbtPopulation": 2.8
+            }
+        },
+        geographyConfig: {
+            highlightBorderWidth: 3,
+            popupTemplate: function (geo, data) {
+                return ['<div class="hoverinfo"><strong>',
+                    '% LGBT ' + geo.properties.name,
+                    ': ' + data.lgbtPopulation,
+                    '</strong></div>'].join('');
+            }
+        }
+    });
+    map.labels();
+    map.legend();
+</script>
+</html>
