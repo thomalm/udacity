@@ -385,10 +385,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># TODO: Select three indices of your choice you wish to sample from the dataset</span>
+<div class=" highlight hl-ipython2"><pre><span class="c"># Select three indices of your choice you wish to sample from the dataset</span>
 <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="mi">92</span><span class="p">]</span>
 
 <span class="c"># Create a DataFrame of the chosen samples</span>
@@ -413,7 +413,7 @@ div#notebook {
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[75]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[83]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -526,11 +526,12 @@ div#notebook {
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="c"># Test all features in the dataframe</span>
     <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        
         <span class="c"># Make a copy of the DataFrame</span>
         <span class="n">new_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
         <span class="c"># Use the removed feature as target label</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        
         <span class="c"># Drop the feature from the feature set</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">new_data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">column</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
 
@@ -542,9 +543,11 @@ div#notebook {
 
         <span class="c"># Report the score of the prediction using the testing set</span>
         <span class="n">score</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+        
         <span class="c"># Store the results in a dictionary</span>
         <span class="n">scores</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
-    
+
+<span class="c"># Print the average regressor scores</span>
 <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">scores</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Column&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s">&quot;Avg. Regressor score {0:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
 </pre></div>
@@ -589,7 +592,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> As the score seemed to be very volatile, especially for the less relevant features i decided to repeat the experiment 10 times to get a better estimate of the relevance. If we take a closer look at the coefficient of determination for <strong>Grocery</strong> we can see that it is positive and has a fairly high value. A high R^2 score implies that the feature is highly relevant for identifying a specific customer. <strong>Frozen</strong>, <strong>Delicatessen</strong> and <strong>Fresh</strong> all have a negative score. The R^2 compares the fit of a chosen model against that of a horizontal straight line (the null hypothesis). If the model scores worse than this line it will have a negative R^2 score and therefore fits the data very poorly.</p>
+<p><strong>Answer:</strong> As the score seemed to be very volatile, especially for features with a lower R^2 score. Due to the volatile results decided to repeat the experiment 10 times to get a better estimate of the relevance.</p>
+<p>If we take a closer look at the coefficient of determination for <strong>Grocery</strong> (0.679) and <strong>Detergents_Paper</strong> (0.720) we can see that they have a fairly high positive value. A high R^2 score means that the information contained in the removed variable is contained to a certain degree in the data already, which makes the value of the feature easier to predict. What this means is that the removed variable most likely is highly correlated with one or more of the other variables, making it easier to predict.</p>
+<p><strong>Frozen</strong> (-1.085), <strong>Delicatessen</strong> (-4.421) and <strong>Fresh</strong> (-0.864) all have a negative score. The R^2 compares the fit of a chosen model against that of a horizontal straight line (the null hypothesis). If the model scores worse than this line it will have a negative R^2 score and therefore fits the data very poorly. This means that our model fails to predict a users purchasing patterns for these categories given all the information about the other categories. Features with a low score provides us with information we do not already know, or is not already contained in the other features.</p>
 
 </div>
 </div>
@@ -2375,8 +2380,8 @@ Ny7+WPF7swAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Question-3">Question 3<a class="anchor-link" href="#Question-3">&#182;</a></h3><p><em>Are there any pairs of features which exhibit some degree of correlation? Does this confirm or deny your suspicions about the relevance of the feature you attempted to predict? How is the data for those features distributed?</em><br>
-<strong>Hint:</strong> Is the data normally distributed? Where do most of the data points lie?</p>
+<h3 id="Question-3">Question 3<a class="anchor-link" href="#Question-3">&#182;</a></h3><p><em>Are there any pairs of features which exhibit some degree of correlation? Does this confirm or deny your suspicions about the relevance of the feature you attempted to predict? How is the data for those features distributed?</em></p>
+<p><strong>Hint:</strong> Is the data normally distributed? Where do most of the data points lie?</p>
 
 </div>
 </div>
@@ -2386,13 +2391,15 @@ Ny7+WPF7swAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> There is a correlation between the following features:</p>
+<p><strong>Answer:</strong></p>
+<p>There is a fairly high correlation between the following features:</p>
 <ul>
-<li>Detergents_Paper &amp; Grocery (0.925)</li>
-<li>Milk &amp; Grocery (0.728)</li>
-<li>Detergents_Paper &amp; Milk (0.662)</li>
+<li>Detergents_Paper - Grocery (0.925)</li>
+<li>Milk - Grocery (0.728)</li>
+<li>Detergents_Paper - Milk (0.662)</li>
 </ul>
-<p>This confirms my "suspicions" that <strong>Grocery</strong> is an important feature. Our smoothed curve, created using Kernel Density Estimate shows that the distribution is skewed towards having a value in the lower end of the spectrum and a few data points with <em>extreme</em> values in the other end of the spectrum. The data is therefore not normally distributed.</p>
+<p>Which are not suprisingly the same three features with the highest R^2 score from Question 2. These results gives some indication regarding which features contributed the most in achieving the high R^2 scores. Not suprisingly we see that the features with a low R^2 score does not seem to be highly correlated with any of the other variables, making them harder to predict.</p>
+<p>Our smoothed curve, created using <em>Kernel Density Estimatation</em> shows that the distribution is skewed towards having a value in the lower end of the spectrum and a few data points with <em>extreme</em> values in the other end of the spectrum. The data is therefore not normally distributed.</p>
 
 </div>
 </div>
