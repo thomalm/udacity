@@ -52,8 +52,10 @@
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
 .highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
 .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
 .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
 .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
 .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
 .highlight .gd { color: #A00000 } /* Generic.Deleted */
@@ -205,25 +207,26 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Import libraries necessary for this project</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import libraries necessary for this project</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">renders</span> <span class="kn">as</span> <span class="nn">rs</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
 
-<span class="c"># Show matplotlib plots inline (nicely formatted in the notebook)</span>
+<span class="c1"># Show matplotlib plots inline (nicely formatted in the notebook)</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
-<span class="c"># Load the wholesale customers dataset</span>
+<span class="c1"># Load the wholesale customers dataset</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&quot;customers.csv&quot;</span><span class="p">)</span>
-    <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">&#39;Region&#39;</span><span class="p">,</span> <span class="s">&#39;Channel&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&quot;Wholesale customers dataset has {} samples with {} features each.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;customers.csv&quot;</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Region&#39;</span><span class="p">,</span> <span class="s1">&#39;Channel&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s2">&quot;Wholesale customers dataset has {} samples with {} features each.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&quot;Dataset could not be loaded. Is the dataset missing?&quot;</span>
+    <span class="k">print</span> <span class="s2">&quot;Dataset could not be loaded. Is the dataset missing?&quot;</span>
 </pre></div>
 
 </div>
@@ -258,10 +261,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Display a description of the dataset</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display a description of the dataset</span>
 <span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 
@@ -273,7 +276,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[74]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[50]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -385,15 +388,15 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Select three indices of your choice you wish to sample from the dataset</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Select three indices of your choice you wish to sample from the dataset</span>
 <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="mi">92</span><span class="p">]</span>
 
-<span class="c"># Create a DataFrame of the chosen samples</span>
+<span class="c1"># Create a DataFrame of the chosen samples</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;Chosen samples of wholesale customers dataset:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;Chosen samples of wholesale customers dataset:&quot;</span>
 
 <span class="n">samples</span>
 </pre></div>
@@ -413,7 +416,7 @@ div#notebook {
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[83]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[51]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -513,43 +516,43 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">scores</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 
-<span class="c"># Repeat the experiment 10 times</span>
+<span class="c1"># Repeat the experiment 10 times</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="c"># Test all features in the dataframe</span>
+    <span class="c1"># Test all features in the dataframe</span>
     <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="c"># Make a copy of the DataFrame</span>
+        <span class="c1"># Make a copy of the DataFrame</span>
         <span class="n">new_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         
-        <span class="c"># Use the removed feature as target label</span>
+        <span class="c1"># Use the removed feature as target label</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         
-        <span class="c"># Drop the feature from the feature set</span>
+        <span class="c1"># Drop the feature from the feature set</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">new_data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">column</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
 
-        <span class="c"># Split the data into training and testing sets using the given feature as the target</span>
+        <span class="c1"># Split the data into training and testing sets using the given feature as the target</span>
         <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-        <span class="c"># Create a decision tree regressor and fit it to the training set</span>
+        <span class="c1"># Create a decision tree regressor and fit it to the training set</span>
         <span class="n">regressor</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">DecisionTreeRegressor</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-        <span class="c"># Report the score of the prediction using the testing set</span>
+        <span class="c1"># Report the score of the prediction using the testing set</span>
         <span class="n">score</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
         
-        <span class="c"># Store the results in a dictionary</span>
+        <span class="c1"># Store the results in a dictionary</span>
         <span class="n">scores</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
 
-<span class="c"># Print the average regressor scores</span>
+<span class="c1"># Print the average regressor scores</span>
 <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">scores</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Column&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s">&quot;Avg. Regressor score {0:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Column&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot;Avg. Regressor score {0:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
 </pre></div>
 
 </div>
@@ -562,12 +565,12 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(&apos;Column&apos;, &apos;Grocery&apos;, &apos;Avg. Regressor score 0.679&apos;)
-(&apos;Column&apos;, &apos;Frozen&apos;, &apos;Avg. Regressor score -1.085&apos;)
-(&apos;Column&apos;, &apos;Delicatessen&apos;, &apos;Avg. Regressor score -4.421&apos;)
-(&apos;Column&apos;, &apos;Detergents_Paper&apos;, &apos;Avg. Regressor score 0.720&apos;)
-(&apos;Column&apos;, &apos;Fresh&apos;, &apos;Avg. Regressor score -0.864&apos;)
-(&apos;Column&apos;, &apos;Milk&apos;, &apos;Avg. Regressor score 0.251&apos;)
+<pre>(&apos;Column&apos;, &apos;Grocery&apos;, &apos;Avg. Regressor score 0.629&apos;)
+(&apos;Column&apos;, &apos;Frozen&apos;, &apos;Avg. Regressor score -1.045&apos;)
+(&apos;Column&apos;, &apos;Delicatessen&apos;, &apos;Avg. Regressor score -1.045&apos;)
+(&apos;Column&apos;, &apos;Detergents_Paper&apos;, &apos;Avg. Regressor score 0.693&apos;)
+(&apos;Column&apos;, &apos;Fresh&apos;, &apos;Avg. Regressor score -0.613&apos;)
+(&apos;Column&apos;, &apos;Milk&apos;, &apos;Avg. Regressor score 0.036&apos;)
 </pre>
 </div>
 </div>
@@ -595,6 +598,7 @@ div#notebook {
 <p><strong>Answer:</strong> As the score seemed to be very volatile, especially for features with a lower R^2 score. Due to the volatile results decided to repeat the experiment 10 times to get a better estimate of the relevance.</p>
 <p>If we take a closer look at the coefficient of determination for <strong>Grocery</strong> (0.679) and <strong>Detergents_Paper</strong> (0.720) we can see that they have a fairly high positive value. A high R^2 score means that the information contained in the removed variable is contained to a certain degree in the data already, which makes the value of the feature easier to predict. What this means is that the removed variable most likely is highly correlated with one or more of the other variables, making it easier to predict.</p>
 <p><strong>Frozen</strong> (-1.085), <strong>Delicatessen</strong> (-4.421) and <strong>Fresh</strong> (-0.864) all have a negative score. The R^2 compares the fit of a chosen model against that of a horizontal straight line (the null hypothesis). If the model scores worse than this line it will have a negative R^2 score and therefore fits the data very poorly. This means that our model fails to predict a users purchasing patterns for these categories given all the information about the other categories. Features with a low score provides us with information we do not already know, or is not already contained in the other features.</p>
+<p>This information gives us some hints regarding which features are more relevant tfor identifying specific customers. A high R^2 score could mean that a feature is less relevant than a feature with a lower score since it contains information that is unique to that feature. Whether this information is useful or not is a different question.</p>
 
 </div>
 </div>
@@ -611,11 +615,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Produce a scatter matrix for each pair of features in the data</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">diagonal</span> <span class="o">=</span> <span class="s">&#39;kde&#39;</span><span class="p">);</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Produce a scatter matrix for each pair of features in the data</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">diagonal</span> <span class="o">=</span> <span class="s1">&#39;kde&#39;</span><span class="p">);</span>
 </pre></div>
 
 </div>
@@ -2386,30 +2390,12 @@ Ny7+WPF7swAAAABJRU5ErkJggg==
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong></p>
-<p>There is a fairly high correlation between the following features:</p>
-<ul>
-<li>Detergents_Paper - Grocery (0.925)</li>
-<li>Milk - Grocery (0.728)</li>
-<li>Detergents_Paper - Milk (0.662)</li>
-</ul>
-<p>Which are not suprisingly the same three features with the highest R^2 score from Question 2. These results gives some indication regarding which features contributed the most in achieving the high R^2 scores. Not suprisingly we see that the features with a low R^2 score does not seem to be highly correlated with any of the other variables, making them harder to predict.</p>
-<p>Our smoothed curve, created using <em>Kernel Density Estimatation</em> shows that the distribution is skewed towards having a value in the lower end of the spectrum and a few data points with <em>extreme</em> values in the other end of the spectrum. The data is therefore not normally distributed.</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Compute pairwise correlation of columns</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Compute pairwise correlation of columns</span>
 <span class="n">data</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
 </pre></div>
 
@@ -2421,7 +2407,7 @@ Ny7+WPF7swAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[79]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[54]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -2508,6 +2494,334 @@ Ny7+WPF7swAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Answer:</strong></p>
+<p>There is a fairly high correlation between the following features:</p>
+<ul>
+<li><strong>Detergents_Paper - Grocery</strong> (0.925)</li>
+<li><strong>Milk - Grocery</strong> (0.728)</li>
+<li><strong>Detergents_Paper - Milk</strong> (0.662)</li>
+</ul>
+<p>Which are not suprisingly the same three features with the highest R^2 score from Question 2. These results gives some indication regarding which features contributed the most in achieving the high R^2 scores. Not suprisingly we see that the features with a low R^2 score does not seem to be highly correlated with any of the other variables, making them harder to predict.</p>
+<p>Regarding the how the features are distributed we can look at the smoothed smoothed curves created using <em>Kernel Density Estimatation</em>. The scatter matrix shows that all the distributions are positively skewed. A positive skew means that the right tail is longer and the mass of the distribution is concentrated on the left of the figure. Consider the following figure showing three different kinds of distributions.</p>
+<p><img style="width:80%; float:left" src="https://udacity-github-sync-content.s3.amazonaws.com/_imgs/29/1463303240/Screenshot_2016-05-15_at_11.06.51_AM.png"/></p>
+<p><br clear="all"/></p>
+<p>To compare our data to the above illusration consider the following boxplot showing our feature distribution showing that we indeed have a positive skew for all distributions.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Set the figure size</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span> 
+
+<span class="c1"># Plot a boxplot</span>
+<span class="n">data</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;axes&#39;</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also compute the unbiased skewedness for all the distribution for all the distributions. A higher positive values means a higher positive skew. From the below numbers we can see that all the distributions are positively skewed. The data is therefore not normally distributed, meaning that the skewedness would have been around 0.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Calculate the skewness</span>
+<span class="n">data</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[80]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Fresh                2.561323
+Milk                 4.053755
+Grocery              3.587429
+Frozen               5.907986
+Detergents_Paper     3.631851
+Delicatessen        11.151586
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Data-Preprocessing">Data Preprocessing<a class="anchor-link" href="#Data-Preprocessing">&#182;</a></h2><p>In this section, you will preprocess the data to create a better representation of customers by performing a scaling on the data and detecting (and optionally removing) outliers. Preprocessing data is often times a critical step in assuring that results you obtain from your analysis are significant and meaningful.</p>
 
 </div>
@@ -2530,17 +2844,17 @@ Ny7+WPF7swAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Scale the data using the natural logarithm</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Scale the data using the natural logarithm</span>
 <span class="n">log_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
 
-<span class="c"># Scale the sample data using the natural logarithm</span>
+<span class="c1"># Scale the sample data using the natural logarithm</span>
 <span class="n">log_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
 
-<span class="c"># Produce a scatter matrix for each pair of newly-transformed features</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">diagonal</span> <span class="o">=</span> <span class="s">&#39;kde&#39;</span><span class="p">);</span>
+<span class="c1"># Produce a scatter matrix for each pair of newly-transformed features</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">log_data</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">diagonal</span> <span class="o">=</span> <span class="s1">&#39;kde&#39;</span><span class="p">);</span>
 </pre></div>
 
 </div>
@@ -6272,10 +6586,10 @@ AAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Display the log-transformed sample data</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display the log-transformed sample data</span>
 <span class="n">log_samples</span>
 </pre></div>
 
@@ -6287,7 +6601,7 @@ AAAASUVORK5CYII=
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[81]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[58]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -6363,48 +6677,48 @@ Once you have performed this implementation, the dataset will be stored in the v
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
-<span class="c"># points of interest</span>
+<span class="c1"># points of interest</span>
 <span class="n">poi</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="c"># For each feature find the data points with extreme high or low values</span>
+<span class="c1"># For each feature find the data points with extreme high or low values</span>
 <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">log_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     
-    <span class="c"># TODO: Calculate Q1 (25th percentile of the data) for the given feature</span>
+    <span class="c1"># TODO: Calculate Q1 (25th percentile of the data) for the given feature</span>
     <span class="n">Q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="mi">25</span><span class="p">)</span>
     
-    <span class="c"># TODO: Calculate Q3 (75th percentile of the data) for the given feature</span>
+    <span class="c1"># TODO: Calculate Q3 (75th percentile of the data) for the given feature</span>
     <span class="n">Q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="mi">75</span><span class="p">)</span>
     
-    <span class="c"># TODO: Use the interquartile range to calculate an outlier step (1.5 times the interquartile range)</span>
+    <span class="c1"># TODO: Use the interquartile range to calculate an outlier step (1.5 times the interquartile range)</span>
     <span class="n">step</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span><span class="p">)</span>
     
-    <span class="c"># Find the abormal points </span>
+    <span class="c1"># Find the abormal points </span>
     <span class="n">abnormal</span> <span class="o">=</span> <span class="n">log_data</span><span class="p">[</span><span class="o">~</span><span class="p">((</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="n">step</span><span class="p">))]</span>
     
-    <span class="c"># Display the outliers</span>
-    <span class="k">print</span> <span class="s">&quot;Data points considered outliers for the feature &#39;{}&#39;:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+    <span class="c1"># Display the outliers</span>
+    <span class="k">print</span> <span class="s2">&quot;Data points considered outliers for the feature &#39;{}&#39;:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
     <span class="n">display</span><span class="p">(</span><span class="n">abnormal</span><span class="p">)</span>
     
-    <span class="c"># Keep the index of the abnormal points</span>
+    <span class="c1"># Keep the index of the abnormal points</span>
     <span class="n">poi</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">abnormal</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
-<span class="c"># Find the points that appear in multiple lists</span>
+<span class="c1"># Find the points that appear in multiple lists</span>
 <span class="n">counts</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">Counter</span><span class="p">(</span><span class="n">poi</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">}</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Outlier Counts&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Outlier Counts&quot;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
 
-<span class="n">outliers</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># counts.keys()</span>
+<span class="n">outliers</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># counts.keys()</span>
 
-<span class="c">#print(&quot;\nOutliers&quot;)</span>
-<span class="c">#print(outliers)</span>
+<span class="c1">#print(&quot;\nOutliers&quot;)</span>
+<span class="c1">#print(outliers)</span>
 
-<span class="c"># Remove the outliers, if any were specified</span>
+<span class="c1"># Remove the outliers, if any were specified</span>
 <span class="n">good_data</span> <span class="o">=</span> <span class="n">log_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">log_data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">outliers</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
@@ -7099,18 +7413,18 @@ Outlier Counts
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
 
-<span class="c"># Apply PCA to the good data with the same number of dimensions as features</span>
+<span class="c1"># Apply PCA to the good data with the same number of dimensions as features</span>
 <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">good_data</span><span class="p">)</span>
 
-<span class="c"># Apply a PCA transformation to the sample log-data</span>
+<span class="c1"># Apply a PCA transformation to the sample log-data</span>
 <span class="n">pca_samples</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">log_samples</span><span class="p">)</span>
 
-<span class="c"># Generate PCA results plot</span>
+<span class="c1"># Generate PCA results plot</span>
 <span class="n">pca_results</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">pca_results</span><span class="p">(</span><span class="n">good_data</span><span class="p">,</span> <span class="n">pca</span><span class="p">)</span>
 </pre></div>
 
@@ -7499,11 +7813,11 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">print</span><span class="p">(</span><span class="s">&quot;First two dimensions&quot;</span><span class="p">,</span> <span class="s">&quot;{0:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">pca_results</span><span class="p">[</span><span class="s">&quot;Explained Variance&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;First four dimensions&quot;</span><span class="p">,</span> <span class="s">&quot;{0:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">pca_results</span><span class="p">[</span><span class="s">&quot;Explained Variance&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;First two dimensions&quot;</span><span class="p">,</span> <span class="s2">&quot;{0:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">pca_results</span><span class="p">[</span><span class="s2">&quot;Explained Variance&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;First four dimensions&quot;</span><span class="p">,</span> <span class="s2">&quot;{0:.3f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">pca_results</span><span class="p">[</span><span class="s2">&quot;Explained Variance&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])))</span>
 </pre></div>
 
 </div>
@@ -7555,10 +7869,10 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Display sample log-data after having a PCA transformation applied</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display sample log-data after having a PCA transformation applied</span>
 <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pca_samples</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">pca_results</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
 </pre></div>
 
@@ -7643,20 +7957,20 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Fit PCA to the good data using only two dimensions</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Fit PCA to the good data using only two dimensions</span>
 <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">good_data</span><span class="p">)</span>
 
-<span class="c"># Apply a PCA transformation the good data</span>
+<span class="c1"># Apply a PCA transformation the good data</span>
 <span class="n">reduced_data</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">good_data</span><span class="p">)</span>
 
-<span class="c"># Apply a PCA transformation to the sample log-data</span>
+<span class="c1"># Apply a PCA transformation to the sample log-data</span>
 <span class="n">pca_samples</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">log_samples</span><span class="p">)</span>
 
-<span class="c"># Create a DataFrame for the reduced data</span>
-<span class="n">reduced_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Dimension 1&#39;</span><span class="p">,</span> <span class="s">&#39;Dimension 2&#39;</span><span class="p">])</span>
+<span class="c1"># Create a DataFrame for the reduced data</span>
+<span class="n">reduced_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Dimension 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Dimension 2&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -7676,11 +7990,11 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Display sample log-data after applying PCA transformation in two dimensions</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pca_samples</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Dimension 1&#39;</span><span class="p">,</span> <span class="s">&#39;Dimension 2&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display sample log-data after applying PCA transformation in two dimensions</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pca_samples</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Dimension 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Dimension 2&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -7691,7 +8005,7 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[64]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -7766,9 +8080,59 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 <p><strong>Advantages of Gaussian Mixture Model:</strong></p>
 <ol>
 <li>It is the fastest algorithm for learning mixture models</li>
-<li>As this algorithm maximizes only the likelihood, it will not bias the means towards zero, or bias the cluster sizes to have specific structures that might or might not apply.</li>
+<li>As this algorithm maximizes only the likelihood, it will not bias the means towards zero, or bias the cluster sizes to have specific structures that might or might not apply <a href="http://scikit-learn.org/stable/modules/mixture.html">[1]</a></li>
+<li>GMM is more flexible than K Means when it comes to modelling the clusters shapes as it support multiple covarance types</li>
 </ol>
-<p>As the argument for K-means is it's simplicity i find it hard to argue it's case against that of a Gaussian Mixture Model. I have therefore chosen to implement the Gaussian Mixture Model.</p>
+<h4 id="Run-time-comparison">Run-time comparison<a class="anchor-link" href="#Run-time-comparison">&#182;</a></h4><p>By doing a run-time comparison we can see that KMeans is slightly faster than our GMM Model.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">timeit</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GMM</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;GMM&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> GMM(n_components=2, covariance_type=&quot;spherical&quot;).fit(reduced_data)
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">KMeans&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> KMeans(n_clusters=2).fit(reduced_data)
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>GMM
+100 loops, best of 3: 14.9 ms per loop
+
+KMeans
+100 loops, best of 3: 11.4 ms per loop
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As the main argument for K-means is it's simplicity i find it hard to argue it's case against the Gaussian Mixture Model. I have therefore chosen to implement the Gaussian Mixture Model.</p>
 
 </div>
 </div>
@@ -7796,25 +8160,24 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GMM</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span>
 
-<span class="c"># Apply your clustering algorithm of choice to the reduced data </span>
-<span class="n">clusterer</span> <span class="o">=</span> <span class="n">GMM</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">covariance_type</span><span class="o">=</span><span class="s">&quot;spherical&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">)</span>
+<span class="c1"># Apply your clustering algorithm of choice to the reduced data </span>
+<span class="n">clusterer</span> <span class="o">=</span> <span class="n">GMM</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">covariance_type</span><span class="o">=</span><span class="s2">&quot;spherical&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">)</span>
 
-<span class="c"># Predict the cluster for each data point</span>
+<span class="c1"># Predict the cluster for each data point</span>
 <span class="n">preds</span> <span class="o">=</span> <span class="n">clusterer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">)</span>
 
-<span class="c"># Find the cluster centers</span>
+<span class="c1"># Find the cluster centers</span>
 <span class="n">centers</span> <span class="o">=</span> <span class="n">clusterer</span><span class="o">.</span><span class="n">means_</span>
 
-<span class="c"># Predict the cluster for each transformed sample data point</span>
+<span class="c1"># Predict the cluster for each transformed sample data point</span>
 <span class="n">sample_preds</span> <span class="o">=</span> <span class="n">clusterer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pca_samples</span><span class="p">)</span>
 
-<span class="c"># Calculate the mean silhouette coefficient for the number of clusters chosen</span>
+<span class="c1"># Calculate the mean silhouette coefficient for the number of clusters chosen</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
     
 <span class="n">score</span>
@@ -7828,11 +8191,11 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[71]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[75]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0.4178181073497621</pre>
+<pre>0.41865150937621848</pre>
 </div>
 
 </div>
@@ -7889,7 +8252,7 @@ zKw/vh/eFsBqM/v0vCcT8oOQzgV8eVAfX/c9wGbn3Ngg6hduQj0PHvf/w1eObxz6/wRRt3AU6nlw
 <div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Display the results of the clustering from implementation</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display the results of the clustering from implementation</span>
 <span class="n">rs</span><span class="o">.</span><span class="n">cluster_results</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">pca_samples</span><span class="p">)</span>
 </pre></div>
 
@@ -8715,17 +9078,17 @@ AAAAIDEIQAAAAAASgwAEAAAAIDEIQAAAAAAS4/8Dvony6dw/ttsAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Inverse transform the centers</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Inverse transform the centers</span>
 <span class="n">log_centers</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">centers</span><span class="p">)</span>
 
-<span class="c"># Exponentiate the centers</span>
+<span class="c1"># Exponentiate the centers</span>
 <span class="n">true_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_centers</span><span class="p">)</span>
 
-<span class="c"># Display the true centers</span>
-<span class="n">segments</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Segment {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">centers</span><span class="p">))]</span>
+<span class="c1"># Display the true centers</span>
+<span class="n">segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Segment {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">centers</span><span class="p">))]</span>
 <span class="n">true_centers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">true_centers</span><span class="p">),</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="n">true_centers</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">segments</span>
 
@@ -8759,21 +9122,21 @@ AAAAIDEIQAAAAAASgwAEAAAAIDEIQAAAAAAS4/8Dvony6dw/ttsAAAAASUVORK5CYII=
   <tbody>
     <tr>
       <th>Segment 0</th>
-      <td>4052.0</td>
-      <td>6277.0</td>
-      <td>9726.0</td>
-      <td>1012.0</td>
-      <td>3031.0</td>
+      <td>4046.0</td>
+      <td>6286.0</td>
+      <td>9745.0</td>
+      <td>1010.0</td>
+      <td>3041.0</td>
       <td>910.0</td>
     </tr>
     <tr>
       <th>Segment 1</th>
-      <td>8673.0</td>
-      <td>2047.0</td>
-      <td>2567.0</td>
-      <td>2010.0</td>
-      <td>332.0</td>
-      <td>697.0</td>
+      <td>8669.0</td>
+      <td>2050.0</td>
+      <td>2570.0</td>
+      <td>2009.0</td>
+      <td>333.0</td>
+      <td>698.0</td>
     </tr>
   </tbody>
 </table>
@@ -8797,6 +9160,42 @@ AAAAIDEIQAAAAAASgwAEAAAAIDEIQAAAAAAS4/8Dvony6dw/ttsAAAAASUVORK5CYII=
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Calculate mean values</span>
+<span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[88]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Fresh               12000.297727
+Milk                 5796.265909
+Grocery              7951.277273
+Frozen               3071.931818
+Detergents_Paper     2881.493182
+Delicatessen         1524.870455
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -8805,6 +9204,16 @@ AAAAIDEIQAAAAAASgwAEAAAAIDEIQAAAAAAS4/8Dvony6dw/ttsAAAAASUVORK5CYII=
 <p><strong>Answer:</strong></p>
 <p>My best guess would be that <strong>Segment 0</strong> could be an hotel or a resturant and <strong>Segment 1</strong> some sort of retailer.</p>
 <p>As i have not seen any reports on the actual spendings of an hotel, resturant or retailer it is hard giving a good answer about what sort of establishment they could represent. The biggest difference seems to be the spendings in the Detergents_Paper, which I assume will be much higher for hotels and resturants in general than a typical retailer due to e.g. dish-washing and laundry. But on the other hand a retailer could also sell detergents and paper. We can see that the clustering algorithm more or less split the data based on Dimension 1 value which is highly dependant on the value of <strong>Detergents_Paper</strong> as seen when looking at the principle components.</p>
+<p>Comparing our cluster centers to the population's mean values we observe the following:</p>
+<ul>
+<li><strong>Fresh</strong>: Both cluster centers are significantly below the mean</li>
+<li><strong>Milk</strong>: segment 0 is slightly above while segment 1 is significantly below the mean</li>
+<li><strong>Grocery</strong>: segment 0 is slightly above while segment 1 is significantly below the mean</li>
+<li><strong>Frozen</strong>: Both segments are significantly below the population's mean</li>
+<li><strong>Detergents_Paper</strong>: segment 0 is slightly above while segment 1 is significantly below the mean</li>
+<li><strong>Delicatessen</strong>: both segments have significantly lower values</li>
+</ul>
+<p>The expenditures associated with segment 0 is lower than the mean in all product categories, but it is larger than segment 1 in two product categories.</p>
 
 </div>
 </div>
@@ -8825,11 +9234,11 @@ AAAAIDEIQAAAAAASgwAEAAAAIDEIQAAAAAAS4/8Dvony6dw/ttsAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">display</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
 
-<span class="c"># Display the predictions</span>
+<span class="c1"># Display the predictions</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sample_preds</span><span class="p">):</span>
-    <span class="k">print</span> <span class="s">&quot;Sample point&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">&quot;predicted to be in Cluster&quot;</span><span class="p">,</span> <span class="n">pred</span>
+    <span class="k">print</span> <span class="s2">&quot;Sample point&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;predicted to be in Cluster&quot;</span><span class="p">,</span> <span class="n">pred</span>
 </pre></div>
 
 </div>
@@ -8984,7 +9393,7 @@ Sample point 2 predicted to be in Cluster 0
 <div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># Display the clustering results based on &#39;Channel&#39; data</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Display the clustering results based on &#39;Channel&#39; data</span>
 <span class="n">rs</span><span class="o">.</span><span class="n">channel_results</span><span class="p">(</span><span class="n">reduced_data</span><span class="p">,</span> <span class="n">outliers</span><span class="p">,</span> <span class="n">pca_samples</span><span class="p">)</span>
 </pre></div>
 
@@ -9777,16 +10186,16 @@ UuP/AdIOCgXtDEbmAAAAAElFTkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">channel_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&quot;customers.csv&quot;</span><span class="p">)[</span><span class="s">&quot;Channel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">channel_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;customers.csv&quot;</span><span class="p">)[</span><span class="s2">&quot;Channel&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="c"># Make of copy of the prediction array</span>
+<span class="c1"># Make of copy of the prediction array</span>
 <span class="n">channel_preds</span> <span class="o">=</span> <span class="n">preds</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-<span class="c"># Change the lable values to correlate with the channel data</span>
+<span class="c1"># Change the lable values to correlate with the channel data</span>
 <span class="n">channel_preds</span><span class="p">[</span><span class="n">channel_preds</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
 
-<span class="c"># Find the number of correct predictions</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;{0} / {1} correct&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">channel_preds</span> <span class="o">==</span> <span class="n">channel_data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">channel_data</span><span class="p">)))</span>
+<span class="c1"># Find the number of correct predictions</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0} / {1} correct&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">channel_preds</span> <span class="o">==</span> <span class="n">channel_data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">channel_data</span><span class="p">)))</span>
 </pre></div>
 
 </div>
