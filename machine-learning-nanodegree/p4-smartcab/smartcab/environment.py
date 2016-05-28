@@ -138,7 +138,7 @@ class Environment(object):
             if (heading[0] * other_state['heading'][0] + heading[1] * other_state['heading'][1]) == -1:
                 if oncoming != 'left':  # we don't want to override oncoming == 'left'
                     oncoming = other_heading
-            elif (heading[1] == other_state['heading'][0] and -heading[0] == other_state['heading'][1]):
+            elif heading[1] == other_state['heading'][0] and -heading[0] == other_state['heading'][1]:
                 if right != 'forward' and right != 'left':  # we don't want to override right == 'forward or 'left'
                     right = other_heading
             else:
