@@ -12,13 +12,13 @@ class LearningAgent(Agent):
 
     *** Q-learning agent pseudo-code ***
 
-    1. Initialize Q(s, a) arbitrarily
-    2. For each trial t:
-        3. Repeat for until deadline or goal is reached:
-            4. Update the state s
-            5. Choose action a from s using a policy derived from Q (e.g. epsilon-greedy)
-            6. Take action a and observe the reward and outcome state s'
-            7. Update Q(s, a) := Q(s,a) + α [r + γ max_a′ Q(s′,a′) − Q(s,a)]
+    * Initialize Q(s, a) arbitrarily
+    * For each trial t:
+        * Repeat for until deadline or goal is reached:
+            * Update the state s
+            * Choose action a from s using a policy derived from Q (e.g. epsilon-greedy)
+            * Take action a and observe the reward and outcome state s'
+            * Update Q(s, a) := Q(s,a) + α [r + γ max_a′ Q(s′,a′) − Q(s,a)]
     """
 
     def __init__(self, env):
@@ -58,34 +58,35 @@ class LearningAgent(Agent):
         inputs = self.env.sense(self)
         return inputs['light'], inputs['oncoming'], inputs['left'], self.next_waypoint
 
-    def update(self, t):
-        """ Implements the q-learning algorithm """
-
-        # Get next waypoint from the route planner
-        self.next_waypoint = self.planner.next_waypoint()
-
-        # Observe the remaining time
-        deadline = self.env.get_deadline(self)
-
-        # Observe the current state
-        s = self.get_state()
-
+    def select_action(self, s):
         # select a random move with probability ε controlled by an epsilon-decay function
         if random.random() < self.epsilon / (self.trial + self.epsilon):
-            a = random.choice(self.actions)
+            return random.choice(self.actions)
         # otherwise action = max Q(s', a')
         else:
             # Shuffle deals with the cases when a draw is returned from np.argmax
             random.shuffle(self.actions)
             # Evaluate all action and pick the one with the highest estimated reward
-            a = self.actions[np.argmax([self.Q[(s, a_i)] for a_i in self.actions])]
+            return self.actions[np.argmax([self.Q[(s, a_i)] for a_i in self.actions])]
+
+    def update(self, t):
+        """ Implements the q-learning algorithm """
+
+        # Get next waypoint from the route planner
+        self.next_waypoint = self.planner.next_waypoint()
+        # Observe the remaining time
+        deadline = self.env.get_deadline(self)
+        # Observe the current state
+        s = self.get_state()
+
+        # Select action a according to policy
+        a = self.select_action(s)
 
         # Take action a, observe reward and s'
         reward, s_i = self.env.act(self, a), self.get_state()
 
         # Calculate maximum attainable reward in the next state (s_i)
         max_a = max([self.Q[(s_i, a_i)] for a_i in self.actions])
-
         # Update state, action value
         self.Q[(s, a)] += self.alpha * (reward + self.gamma * max_a - self.Q[(s, a)])
 
