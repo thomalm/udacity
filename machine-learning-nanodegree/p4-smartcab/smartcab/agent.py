@@ -29,17 +29,29 @@ class LearningAgent(Agent):
         self.planner = RoutePlanner(self.env, self)  # Route planner to get next_waypoint
         self.actions = Environment.valid_actions  # Store all possible actions (improved code readability)
 
-        self.Q = defaultdict(lambda: random.random())  # Initialize arbitrary values for all state, action pairs
+        self.Q = defaultdict(lambda: random.uniform(-.25, .25))  # arbitrary values for all state, action pairs
         self.gamma = 0.35  # Discount factor of max(Qs', a')
         self.epsilon = 0.9  # Probability of doing a random move
         self.alpha = 0.2  # Learning rate
         self.trial = 0  # Trial counter (epsilon decay)
+        self.selection = "random"
+        self.filter = False
 
         self.total_reward = 0  # Keep track of total reward for the current trial
         self.mistake_counter = 0  # Keep track of the number of moves with a negative reward
         self.rewards = []  # Historical rewards
         self.mistakes = []  # Historical mistakes
         self.results = []  # Non-successful trials
+        self.success = 1
+
+    def set_parameters(self, alpha, epsilon, gamma, selection, f):
+        """ Overwrite the parameters with static settings hack """
+
+        self.gamma = gamma  # Discount factor of max(Qs', a')
+        self.epsilon = epsilon  # Probability of doing a random move
+        self.alpha = alpha
+        self.selection = selection
+        self.filter = f
 
     def reset(self, destination=None):
         """ Reset the agent between trails """
@@ -51,6 +63,8 @@ class LearningAgent(Agent):
         self.mistakes.append(self.mistake_counter)  # Keep track of mistakes for each trial
         self.total_reward = 0  # Reset reward counter
         self.mistake_counter = 0  # Reset mistake counter
+        self.results.append(self.success)
+        self.success = 1
 
     def get_state(self):
         """ Return the current state s of the agent """
@@ -58,68 +72,91 @@ class LearningAgent(Agent):
         inputs = self.env.sense(self)
         return inputs['light'], inputs['oncoming'], inputs['left'], self.next_waypoint
 
+    def select_action(self, s):
+
+        if self.selection == "random":
+            return random.choice(self.actions)
+
+        if self.selection == "epsilon-greedy":
+            # select a random move with probability ε
+            if random.random() < self.epsilon:
+                return random.choice(self.actions)
+            else:
+                # Shuffle deals with the cases when a draw is returned from np.argmax
+                random.shuffle(self.actions)
+                # Evaluate all action and pick the one with the highest estimated reward
+                return self.actions[np.argmax([self.Q[(s, a_i)] for a_i in self.actions])]
+
+        elif self.selection == "epsilon-decay":
+            # select a random move with probability ε controlled by an epsilon-decay function
+            if random.random() < np.exp(-self.epsilon * self.trial):
+                return random.choice(self.actions)
+            # otherwise action = max Q(s', a')
+            else:
+                # Shuffle deals with the cases when a draw is returned from np.argmax
+                random.shuffle(self.actions)
+                # Evaluate all action and pick the one with the highest estimated reward
+                return self.actions[np.argmax([self.Q[(s, a_i)] for a_i in self.actions])]
+
     def update(self, t):
         """ Implements the q-learning algorithm """
 
         # Get next waypoint from the route planner
         self.next_waypoint = self.planner.next_waypoint()
 
-        # Observe the remaining time
-        deadline = self.env.get_deadline(self)
+        # Filter out unwanted actions
+        if self.filter:
+            self.actions = [self.next_waypoint, None]
 
         # Observe the current state
         s = self.get_state()
-
-        # select a random move with probability ε controlled by an epsilon-decay function
-        if random.random() < self.epsilon / (self.trial + self.epsilon):
-            a = random.choice(self.actions)
-        # otherwise action = max Q(s', a')
-        else:
-            # Shuffle deals with the cases when a draw is returned from np.argmax
-            random.shuffle(self.actions)
-            # Evaluate all action and pick the one with the highest estimated reward
-            a = self.actions[np.argmax([self.Q[(s, a_i)] for a_i in self.actions])]
-
+        # Select action a according to policy
+        a = self.select_action(s)
         # Take action a, observe reward and s'
         reward, s_i = self.env.act(self, a), self.get_state()
-
         # Calculate maximum attainable reward in the next state (s_i)
         max_a = max([self.Q[(s_i, a_i)] for a_i in self.actions])
-
         # Update state, action value
-        self.Q[(s, a)] += self.alpha * (reward + self.gamma * max_a - self.Q[(s, a)])
+        self.Q[(s, a)] += self.alpha * (reward + self.gamma * (max_a - self.Q[(s, a)]))
 
         # Update total reward
         self.total_reward += reward
-
-        # Store failed attempts
-        if deadline == 0:
-            self.results.append(self.trial)
-
+        # If remaining time is 0, store as failed attempt
+        if self.env.get_deadline(self) == 0:
+            self.success = 0
         # Update total mistakes
         if reward < 0:
             self.mistake_counter += 1
 
+        # DEBUG
         # print "deadline = {}, inputs = {}, action = {}, reward = {}".format(
             # self.env.sense(self), self.env.get_deadline(self), a, reward)
 
-    def get_run_statistics(self):
+    def get_run_data(self):
         return self.results, self.mistakes, self.rewards
 
 
-def run():
+def run(alpha, epsilon, gamma, selection, t, f):
     """Run the agent for a finite number of trials."""
 
-    # Set up environment and agent
-    e = Environment()  # create environment (also adds some dummy traffic)
-    a = e.create_agent(LearningAgent)  # create agent
-    e.set_primary_agent(a, enforce_deadline=True)  # set agent to track
+    # create environment, add dummy agents
+    e = Environment()
 
-    # Now simulate it
-    sim = Simulator(e, update_delay=0.00001)  # reduce update_delay to speed up simulation
-    sim.run(n_trials=100)  # press Esc or close pygame window to quit
-    return a.get_run_statistics()
+    # Create our agent
+    a = e.create_agent(LearningAgent)
+    # Initialize agent settings
+    a.set_parameters(alpha, epsilon, gamma, selection, f)
+    # Configure the environment, set agent a as primary agent to track
+    e.set_primary_agent(a, enforce_deadline=True)
+
+    # Simulator settings, reduce delay to speed up simulations
+    sim = Simulator(e, update_delay=0.00001)
+    # Set the number of trials
+    sim.run(n_trials=t)
+
+    # Return data on agents performance
+    return a.get_run_data()
 
 
 if __name__ == '__main__':
-    run()
+    run(.2, .5, .1, "epsilon-decay", 100)
